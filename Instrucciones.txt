@@ -1,0 +1,29 @@
+La carpeta contenedora del código fuente principar es "src". El script Compiler.sh esta preparado para que en caso de que se modifique la organización del código fuente ( añadir nuevos módulos, quitar módulos o guardar en directorios el código  ), este lo compile sin problemas.
+
+1: Para compilar POR PRIMERA VEZ ejecute el siguiente script con la siguiente comando:
+            
+            ./Compiler.sh
+
+2: En caso de que necesite recompilar, podrá ejecutar el siguiente script para reducir el tiempo de compilación:
+
+            ./Recompile.sh
+
+3: Para ejecutar el programa del lado de servidor ejecute:
+
+            ./ExecuteServer.sh
+
+NOTAS: 
+
+*Para ejecutar cualquiera de estos scrpts, es necesario que se encuente su consola a la altura de este mismo archivo ( Instrucciones.txt ).
+
+*En caso de que no permita ejecutar el script cambiar los permisos de ejecución de los tres con los siguientes comandos:
+            
+            chmod 777 CompilerServer.sh 
+            chmod 777 RecompileServer.sh
+            chmod 777 ExecuteServer.sh 
+ 
+
+
+
+
+
