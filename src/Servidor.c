@@ -14,6 +14,8 @@
 #include <sys/wait.h>
 #include <signal.h>
 
+#include"Student.h"
+
 #define MYPORT 3490    // Puerto al que conectarán los usuarios
 
 #define BACKLOG 100     // Cuántas conexiones pendientes se mantienen en cola
@@ -29,6 +31,18 @@ void sigchld_handler(int s)
 
 int main(int argc, char *argv[])
 {
+#if 1
+  //////////////////////////////////////////////////
+  //          TEST DRIVER PROGRAM                 //
+  //////////////////////////////////////////////////
+
+  Student* s = Student_New( 1, "Pepe", "Pecas", "Pica Papas", 5, "Computacion" );
+  ST_Print( s );
+  Student_Delete( s );
+#endif
+
+/********SWITCH PARA SOCKET*********/
+#if 0
   int sockfd, new_fd, numbytes;  // Escuchar sobre sock_fd, nuevas conexiones sobre new_fd
   char buf[MAXDATASIZE];
   struct sockaddr_in my_addr;    // información sobre mi dirección
@@ -131,4 +145,5 @@ int main(int argc, char *argv[])
   } // Fin del while
 
   return 0;
+#endif 
 }
