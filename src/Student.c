@@ -4,13 +4,12 @@
 *	@brief Crea un objeto tipo Student
 *	@return Referencia a un nuevo .
 */
-Student* Student_New( int id, char name[], char fatherLastName[], char motherLastName[], int semester, char program[] ){
+Student* Student_New( int id, char name[], char lastName[], int semester, char program[]  ){
 	Student* s = ( Student* ) malloc( sizeof( Student ) );
 
 	s->id = id;
 	strcpy( s->name, name );
-	strcpy( s->fatherLastName, fatherLastName );
-	strcpy( s->motherLastName, motherLastName );
+	strcpy( s->lastName, lastName );
 	s->semester = semester;
 	strcpy( s->program, program );
 	return s;
@@ -33,11 +32,10 @@ void Student_Delete( Student* this ){
 */
 void ST_To_String( Student* this, char chain[], size_t len ){
 	snprintf( chain, len - 1,
-		"%d, %s, %s, %s, %d, %s",
+		"%d, %s, %s, %d, %s",
 		this->id,
 		this->name,
-		this->fatherLastName,
-		this->motherLastName,
+		this->lastName,
 		this->semester,
 		this->program
 	);

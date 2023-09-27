@@ -14,7 +14,7 @@
 #include <sys/wait.h>
 #include <signal.h>
 
-#include"Student.h"
+#include"DataManager.h"
 
 #define MYPORT 3490    // Puerto al que conectarán los usuarios
 
@@ -36,9 +36,13 @@ int main(int argc, char *argv[])
   //          TEST DRIVER PROGRAM                 //
   //////////////////////////////////////////////////
 
-  Student* s = Student_New( 1, "Pepe", "Pecas", "Pica Papas", 5, "Computacion" );
-  ST_Print( s );
-  Student_Delete( s );
+  DataManager* dm = DataManager_New();
+  DM_Add_Student( dm, "Rafael", "Gonzalez", 9, "Computacion"  );
+  DM_Add_Student( dm, "Antonio", "Nova", 10, "Electrica"  );
+  DM_Print_StudentsList( dm );
+  DataManager_Delete( dm );
+
+
 #endif
 
 /********SWITCH PARA SOCKET*********/
