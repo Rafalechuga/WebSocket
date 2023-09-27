@@ -22,6 +22,8 @@ void DataManager_Delete( DataManager* this );
 void DM_Print_StudentsList( DataManager* this );
 void DM_Get_StudentesList( DataManager* this, void* ptrArr[] );
 bool DM_Add_Student( DataManager* this, char name[], char lastName[], int semester, char program[]  );
+Student* DM_Find_Student( DataManager* this, int id );
+void DM_Delete_Student( DataManager* this, int id );
 
 
 #if 0

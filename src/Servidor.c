@@ -40,6 +40,9 @@ int main(int argc, char *argv[])
   DM_Add_Student( dm, "Rafael", "Gonzalez", 9, "Computacion"  );
   DM_Add_Student( dm, "Antonio", "Nova", 10, "Electrica"  );
   DM_Print_StudentsList( dm );
+  DM_Delete_Student( dm, 1 );
+  printf("=====================\n");
+  DM_Print_StudentsList( dm );
   DataManager_Delete( dm );
 
 

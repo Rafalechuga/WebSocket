@@ -117,34 +117,53 @@ bool DM_Add_Student( DataManager* this, char name[], char lastName[], int semest
 */
 void DM_Get_StudentesList( DataManager* this, void* ptrArr[] ){ DLL_GetInformation( this->students, ptrArr ); }
 
+/**
+*	@brief Busca una ciudad en la DLL students por su ID
+*	@param id ID del alumno a buscar.
+*	@param direction Apuntador a ciudad donde se guardara coincidencia de búsqueda
+*	@return Referencia a objeto student si la encontro, NULL en caso contrario.
+*/
+Student* DM_Find_Student( DataManager* this, int id ){
+	size_t sLen = DLL_Len( this->students );
+	void* sList[ sLen ];
+
+	DM_Get_StudentesList( this, sList );
+
+	Student* s = NULL;
+
+	for( size_t i = 0; i < sLen; ++i ){
+		s = ( Student* )sList[ i ];
+		if( s->id == id  )
+			return s;
+	}
+	return s;
+}
+
+/**
+*	@brief Borra un registro de alumno
+* 	@param this Referencia de un objeto Data Manager
+*  	@param id Parametro de busqueda para borrar
+*/
+void DM_Delete_Student( DataManager* this, int id )
+{
+	Student* s = DM_Find_Student( this, id );
+	if( s == NULL ){ printf("Sin coincidencia de busqueda\n"); }
+	else
+	{ 
+		DLL_RemoveNode(  this->students, s ); 
+	}
+
+}
+
 #if 0
+
 /**
 *	@brief Carga información previa de una DB.
 *	@param this Referencia a un objeto DataManager.
 */
 void DM_LoadInformation( DataManager* this ){ recover_Data( this ); }
 
-/**
-*	@brief Busca una ciudad en la DLL cities por su nombre.
-*	@param name Nombre de la ciudad a buscar.
-*	@param direction Apuntador a ciudad donde se guardara coincidencia de búsqueda
-*	@return Referencia a una ciudad si la encontro, NULL en caso contrario.
-*/
-City* DM_Find_City( DataManager* this, char name[] ){
-	size_t cLen = DLL_Len( this->cities );
-	void* cList[ cLen ];
 
-	DM_Get_CitiesList( this, cList );
-
-	City* c = NULL;
-
-	for( size_t i = 0; i < cLen; ++i ){
-		c = ( City* )cList[ i ];
-		if( strcmp( c->name, name ) == 0  )
-			return c;
-	}
-	return c;
-}
 
 #endif
 

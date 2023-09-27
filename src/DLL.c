@@ -153,15 +153,19 @@ bool   DLL_IsOnList  (  DLL* this, Item value ){
 	return false;
 }
 
-bool DLL_RemoveNode(  DLL* this, Item value)
+bool DLL_RemoveNode(  DLL* this, Item value )
 {
 	assert( this );
 	if( DLL_IsOnList( this, value ) ){
 		Node* n = findNode( this, value );
 
 		if( n != NULL ){
+
+			if( n == this->first && DLL_Len( this ) > 1 ) this->first = n->next;
+			if( n == this->last && DLL_Len( this ) > 1 ) this->last = n->prev;
+
 			Node* tmp1 = n->prev; 
-			Node* tmp2 = n->next;
+			Node* tmp2 = n->next; 
 
 			free( n );
 
