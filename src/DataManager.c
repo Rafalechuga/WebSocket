@@ -13,7 +13,22 @@
 *	@return false Si falló el guardado.
 */
 bool save_Data( DataManager* this ){
-	
+    const char *nombreArchivo = "alumno.txt";
+
+    // Abre el archivo en modo append
+    FILE *archivo = fopen(nombreArchivo, "a");
+
+    // Verifica si el archivo se abrió correctamente
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo.\n");
+        return 1;
+    }
+
+    // Escribe la cadena en el archivo
+    fprintf(archivo, "%s\n", cadena);
+
+    // Cierra el archivo
+    fclose(archivo);
 }
 
 /**
@@ -45,7 +60,6 @@ DataManager* DataManager_New()
 	// 		CARGAR TXT Y OBTENER ULTIMO ID 		///
 	///////////////////////////////////////////////
 	dm->lastStudentID = 0;
-
 
 	if( dm->students == NULL )
 		dm ->students = DLL_New();
