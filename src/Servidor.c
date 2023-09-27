@@ -36,12 +36,16 @@ int main(int argc, char *argv[])
   //          TEST DRIVER PROGRAM                 //
   //////////////////////////////////////////////////
 
+  printf("=================================================== Insertar\n");
   DataManager* dm = DataManager_New();
   DM_Add_Student( dm, "Rafael", "Gonzalez", 9, "Computacion"  );
   DM_Add_Student( dm, "Antonio", "Nova", 10, "Electrica"  );
   DM_Print_StudentsList( dm );
+  printf("=================================================== Eliminar\n");
   DM_Delete_Student( dm, 1 );
-  printf("=====================\n");
+  DM_Print_StudentsList( dm );
+  printf("=================================================== Update \n");
+  DM_Update_Student_LastName( dm, 2, "Novus" );
   DM_Print_StudentsList( dm );
   DataManager_Delete( dm );
 

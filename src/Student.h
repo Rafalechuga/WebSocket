@@ -20,6 +20,7 @@ typedef struct Student
 
 Student* Student_New( int id, char name[], char lastName[], int semester, char program[] );
 void Student_Delete( Student* this );
+void ST_Set_LastName( Student* this, char newLastName[] );
 void ST_To_String( Student* this, char chain[], size_t len );
 void ST_Print( Student* this );
 

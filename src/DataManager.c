@@ -140,6 +140,18 @@ Student* DM_Find_Student( DataManager* this, int id ){
 }
 
 /**
+*	@brief Edita un registro alumno en su apellid
+* 	@param this Referencia de un objeto Data Manager
+*  	@param id Parametro de busqueda para modificar
+*/
+void DM_Update_Student_LastName( DataManager* this, int id, char newLastName[] )
+{
+	Student* s = DM_Find_Student( this, id );
+	if( s == NULL ){ printf("Sin coincidencia de busqueda\n"); }
+	else ST_Set_LastName( s , newLastName );
+}
+
+/**
 *	@brief Borra un registro de alumno
 * 	@param this Referencia de un objeto Data Manager
 *  	@param id Parametro de busqueda para borrar

@@ -42,6 +42,15 @@ void ST_To_String( Student* this, char chain[], size_t len ){
 }
 
 /**
+ *	@brief Actualiza el apellido de un alumno
+ * 	@param this Referencia a un objeto alumno
+ * 	@newLastName Nuevo apellido
+ */
+void ST_Set_LastName( Student* this, char newLastName[] ){
+	strcpy( this->lastName, newLastName );
+}
+
+/**
 *	@brief Imprime en consola un objeto Student.
 *	@param this referencia al estudiante a imprir.
 */
