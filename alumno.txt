@@ -1,0 +1,4 @@
+ID, Nombre, Apellido, Semestre, Carrera
+1, Rafael, Gonzalez, 9, Computacion
+2, Antonio, Novus, 10, Electrica
+4, Francisco, Cruz, 10, Mecanica

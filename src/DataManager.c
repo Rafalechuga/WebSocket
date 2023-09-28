@@ -13,7 +13,18 @@
 *	@return false Si falló el guardado.
 */
 bool save_Data( DataManager* this ){
-    const char *nombreArchivo = "alumno.txt";
+	const char *nombreArchivo = "alumno.txt";
+	if (remove(nombreArchivo) == 0) {
+        printf("Archivo borrado%s.\n", nombreArchivo);
+    } else {
+        printf("No se pudo borrar el archivo %s.\n", nombreArchivo);
+    }
+
+	size_t dllSize = DLL_Len( this->students ); 
+	void* ptrArr[ dllSize ];
+	DM_Get_StudentesList( this, ptrArr );
+
+    
 
     // Abre el archivo en modo append
     FILE *archivo = fopen(nombreArchivo, "a");
@@ -24,10 +35,14 @@ bool save_Data( DataManager* this ){
         return 1;
     }
 
-    // Escribe la cadena en el archivo
-    fprintf(archivo, "%s\n", cadena);
-
-    // Cierra el archivo
+    fprintf(archivo, "%s\n", "ID, Nombre, Apellido, Semestre, Carrera");
+    // Guardar cada alumno
+    for( size_t i = 0; i < dllSize; i++ ){
+    	char tmpChain[ 256 ];
+		ST_To_String( ( Student* )ptrArr[ i ], tmpChain, 256 );
+		fprintf(archivo, "%s\n", tmpChain);	
+	}
+    
     fclose(archivo);
 }
 
@@ -76,9 +91,8 @@ void DataManager_Delete( DataManager* this )
 {
 	assert( this );
 
-	///////////////////////////////////////////////
-	// 		Salvar información			 		///
-	///////////////////////////////////////////////
+	// SALVAR INFORMACIÓN!
+	save_Data( this );
 
 	size_t lenStudents = DLL_Len( this->students );
 	void* ptrStudents[ lenStudents ];
