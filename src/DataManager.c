@@ -53,7 +53,54 @@ bool save_Data( DataManager* this ){
 *	@return false Si falló la recuperación.
 */
 bool recover_Data( DataManager* this ){
-	
+
+    const char *nombreArchivo = "alumno.txt";
+
+    FILE *archivo = fopen(nombreArchivo, "r");
+
+    // Verifica si el archivo se abrió correctamente
+    if (archivo == NULL) {
+        printf("No se pudo abrir el archivo %s.\n", nombreArchivo);
+        return 1;
+    }
+
+    // Variables para almacenar la línea leída y los tokens
+    char linea[256];
+    char *token;
+
+    //Leer cabecera del archivo e ignorar
+    fgets(linea, sizeof(linea), archivo);
+
+    // Lee cada línea del archivo
+    while (fgets(linea, sizeof(linea), archivo) != NULL) {
+        // Tokeniza la línea usando la coma como delimitador
+        token = strtok(linea, ",");
+
+		int  id;
+		char name[ 32 ];
+		char lastName[ 32 ];
+		int semester;
+		char program[ 32 ];
+
+		for (int i = 0; i < 6; ++i)
+		{	
+			if( i == 0 ) if( this->lastStudentID < ( int )*token ) this->lastStudentID = ( int )*token;
+			if( i == 1 ) id = ( int )*token;
+			if( i == 2 ) strcpy( name, token);
+			if( i == 3 ) strcpy( lastName, token );
+			if( i == 4 ) semester = ( int )*token;
+			if( i == 5 ) strcpy( program, token );
+
+			token = strtok(NULL, ",");
+		}
+
+		DM_Add_Student( this, name, lastName, semester, program );
+    }
+
+    // Cierra el archivo
+    fclose(archivo);
+
+    return 0;
 }
 
 
