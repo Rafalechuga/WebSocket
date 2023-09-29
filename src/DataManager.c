@@ -73,28 +73,33 @@ bool recover_Data( DataManager* this ){
 
     // Lee cada línea del archivo
     while (fgets(linea, sizeof(linea), archivo) != NULL) {
+
+    	// Elimina el salto de línea ('\n') si está presente en la línea
+        char *posicionSaltoLinea = strchr(linea, '\n');
+        if (posicionSaltoLinea != NULL) {
+            *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '\0' (fin de cadena)
+        }
+
         // Tokeniza la línea usando la coma como delimitador
         token = strtok(linea, ",");
 
-		int  id;
 		char name[ 32 ];
 		char lastName[ 32 ];
 		int semester;
 		char program[ 32 ];
 
-		for (int i = 0; i < 6; ++i)
+		for (int i = 0; i < 5; ++i)
 		{	
-			if( i == 0 ) if( this->lastStudentID < ( int )*token ) this->lastStudentID = ( int )*token;
-			if( i == 1 ) id = ( int )*token;
-			if( i == 2 ) strcpy( name, token);
-			if( i == 3 ) strcpy( lastName, token );
-			if( i == 4 ) semester = ( int )*token;
-			if( i == 5 ) strcpy( program, token );
+			if( i == 0 ) if( this->lastStudentID < atoi(token) )  this->lastStudentID = atoi(token);
+			if( i == 1 ) strcpy( name, token);
+			if( i == 2 ) strcpy( lastName, token );
+			if( i == 3 ) semester = atoi(token);
+			if( i == 4 ) strcpy( program, token );
 
 			token = strtok(NULL, ",");
 		}
 
-		DM_Add_Student( this, name, lastName, semester, program );
+		DM_Load_Student( this, name, lastName, semester, program );
     }
 
     // Cierra el archivo
@@ -118,15 +123,12 @@ DataManager* DataManager_New()
 {
 	DataManager* dm = ( DataManager* )malloc( sizeof( DataManager ) );
 
-	///////////////////////////////////////////////
-	// 		CARGAR TXT Y OBTENER ULTIMO ID 		///
-	///////////////////////////////////////////////
-
 	dm->lastStudentID = 0;
 
 	if( dm->students == NULL )
 		dm ->students = DLL_New();
 
+	// Recuperar Informacion
 	recover_Data( dm );
 
 	return dm;
@@ -170,7 +172,22 @@ void DM_Print_StudentsList( DataManager* this ){
 
 /**
 *	@brief Agega un un objeto de tipo estudiante
-*	con nombre name2, el metodo valida que las ciudades esten en la lista.
+*	@param this Referencia a un objeto DataManager.
+* 	@param id Id del estudiente.
+* 	@param name Nombre del estudiante
+*	@param lastName Apellido del estudiante
+* 	@param semester Semestre lectivo
+* 	@param program Carrera del estudiante.
+*	@return true Si se añadio con éxito.
+*	@return false Si falló o no se encontraron las ciudades.
+*/
+bool DM_Load_Student( DataManager* this, char name[], char lastName[], int semester, char program[]  ){
+	Student* s = Student_New( this->lastStudentID, name, lastName, semester, program );
+	return DLL_InsertBack( this->students, s );
+}
+
+/**
+*	@brief Agega un un objeto de tipo estudiante
 *	@param this Referencia a un objeto DataManager.
 * 	@param id Id del estudiente.
 * 	@param name Nombre del estudiante

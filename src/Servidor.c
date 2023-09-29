@@ -38,6 +38,7 @@ int main(int argc, char *argv[])
   DataManager* dm = DataManager_New();
   printf("=================================================== Cargar\n");
   DM_Print_StudentsList( dm );
+
 #if 0
   printf("=================================================== Insertar\n");
   DM_Add_Student( dm, "Rafael", "Gonzalez", 9, "Computacion"  );
@@ -45,17 +46,22 @@ int main(int argc, char *argv[])
   DM_Add_Student( dm, "Alfredo", "Perez", 5, "Geomatica"  );
   DM_Add_Student( dm, "Francisco", "Cruz", 10, "Mecanica"  );
   DM_Print_StudentsList( dm );
-  printf("=================================================== Eliminar\n");
-  DM_Delete_Student( dm, 3 );
-  DM_Print_StudentsList( dm );
   printf("=================================================== Update \n");
   DM_Update_Student_LastName( dm, 2, "Novus" );
   DM_Print_StudentsList( dm );
 #endif
 
+#if 0
   printf("=================================================== Insertar\n");
   DM_Add_Student( dm, "Alfredo", "Perez", 5, "Geomatica"  );
   DM_Print_StudentsList( dm );
+#endif
+
+#if 1
+  printf("=================================================== Eliminar\n");
+  DM_Delete_Student( dm, 3 );
+  DM_Print_StudentsList( dm );
+#endif
 
   DataManager_Delete( dm );
 

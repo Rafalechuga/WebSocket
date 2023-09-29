@@ -32,7 +32,7 @@ void Student_Delete( Student* this ){
 */
 void ST_To_String( Student* this, char chain[], size_t len ){
 	snprintf( chain, len - 1,
-		"%d, %s, %s, %d, %s",
+		"%d,%s,%s,%d,%s",
 		this->id,
 		this->name,
 		this->lastName,

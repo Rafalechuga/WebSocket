@@ -1,2 +1,1 @@
 ID, Nombre, Apellido, Semestre, Carrera
-1, Alfredo, Perez, 5, Geomatica

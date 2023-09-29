@@ -1,4 +1,4 @@
-./src/Student.c
 ./src/DLL.c
+./src/Student.c
 ./src/Servidor.c
 ./src/DataManager.c
