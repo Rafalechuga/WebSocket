@@ -121,10 +121,13 @@ DataManager* DataManager_New()
 	///////////////////////////////////////////////
 	// 		CARGAR TXT Y OBTENER ULTIMO ID 		///
 	///////////////////////////////////////////////
+
 	dm->lastStudentID = 0;
 
 	if( dm->students == NULL )
 		dm ->students = DLL_New();
+
+	recover_Data( dm );
 
 	return dm;
 }
