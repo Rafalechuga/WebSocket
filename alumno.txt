@@ -1,1 +1,5 @@
 ID, Nombre, Apellido, Semestre, Carrera
+1,Rafael,Gonzalez,9,Computacion
+2,Antonio,Nova,10,Electrica
+3,Alfredo,Cantu,8,Informatica
+5,Sergio,Valencia,8,Geomatica

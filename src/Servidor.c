@@ -32,44 +32,11 @@ void sigchld_handler(int s)
 int main(int argc, char *argv[])
 {
 
-  //////////////////////////////////////////////////
-  //          TEST DRIVER PROGRAM                 //
-  //////////////////////////////////////////////////
   DataManager* dm = DataManager_New();
-  printf("=================================================== Cargar\n");
-  DM_Print_StudentsList( dm );
-
-#if 0
-  printf("=================================================== Insertar\n");
-  DM_Add_Student( dm, "Rafael", "Gonzalez", 9, "Computacion"  );
-  DM_Add_Student( dm, "Antonio", "Nova", 10, "Electrica"  );
-  DM_Add_Student( dm, "Alfredo", "Perez", 5, "Geomatica"  );
-  DM_Add_Student( dm, "Francisco", "Cruz", 10, "Mecanica"  );
-  DM_Print_StudentsList( dm );
-  printf("=================================================== Update \n");
-  DM_Update_Student_LastName( dm, 2, "Novus" );
-  DM_Print_StudentsList( dm );
-#endif
-
-#if 0
-  printf("=================================================== Insertar\n");
-  DM_Add_Student( dm, "Alfredo", "Perez", 5, "Geomatica"  );
-  DM_Print_StudentsList( dm );
-#endif
-
-#if 1
-  printf("=================================================== Eliminar\n");
-  DM_Delete_Student( dm, 3 );
-  DM_Print_StudentsList( dm );
-#endif
-
-  DataManager_Delete( dm );
-
-
 
 
 /********SWITCH PARA SOCKET*********/
-#if 0
+#if 1
   int sockfd, new_fd, numbytes;  // Escuchar sobre sock_fd, nuevas conexiones sobre new_fd
   char buf[MAXDATASIZE];
   struct sockaddr_in my_addr;    // información sobre mi dirección
@@ -154,7 +121,8 @@ int main(int argc, char *argv[])
       else
         printf("Servidor-The recv() is OK...\n");
       buf[numbytes] = '\0';
-      printf("Servidor-Received: %s", buf);
+      //printf("Servidor-Received: %s", buf);
+      DM_Tokenize_Data( dm, buf );
 
       // Ahora yo capturo del teclado para responder al cliente
       printf("Escribe un mensaje a enviar\n");
@@ -172,5 +140,8 @@ int main(int argc, char *argv[])
   } // Fin del while
 
   return 0;
+
 #endif 
+
+  DataManager_Delete( dm );
 }

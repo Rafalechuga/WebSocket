@@ -14,6 +14,15 @@
 // UPDATE 	-> 
 // DELETE 	-> DM_Delete_Student
 
+typedef enum
+{
+	SELECT,
+	INSERT,
+	UPDATE,
+	DELETE,
+	SALIR
+} Instruction ;
+
 typedef struct DataManager
 {
 	DLL* students;
@@ -31,6 +40,7 @@ bool DM_Load_Student( DataManager* this, char name[], char lastName[], int semes
 Student* DM_Find_Student( DataManager* this, int id );
 void DM_Update_Student_LastName( DataManager* this, int id, char newLastName[] );
 void DM_Delete_Student( DataManager* this, int id );
+void DM_Tokenize_Data( DataManager* this, char chain[] );
 
 
 

@@ -144,7 +144,7 @@ void DataManager_Delete( DataManager* this )
 	assert( this );
 
 	// SALVAR INFORMACIÓN!
-	save_Data( this );
+	//save_Data( this );
 
 	size_t lenStudents = DLL_Len( this->students );
 	void* ptrStudents[ lenStudents ];
@@ -231,6 +231,8 @@ Student* DM_Find_Student( DataManager* this, int id ){
 		if( s->id == id  )
 			return s;
 	}
+
+	ST_Print( s );
 	return s;
 }
 
@@ -261,6 +263,42 @@ void DM_Delete_Student( DataManager* this, int id )
 	}
 
 }
+
+void DM_Tokenize_Data( DataManager* this, char chain[] )
+{
+	// Copiar la cadena en una variable modificable
+    char copiaCadena[256]; // Tamaño suficientemente grande para contener la cadena
+    strcpy(copiaCadena, chain);
+
+    // Elimina el salto de línea ('\n') si está presente en la línea
+    char *posicionSaltoLinea = strchr(copiaCadena, '\n');
+    if (posicionSaltoLinea != NULL) 
+    {
+        *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '\0' (fin de cadena)
+    }
+
+    // Elimina el salto de línea (' ') si está presente en la línea
+    posicionSaltoLinea = strchr(copiaCadena, ' ');
+    if (posicionSaltoLinea != NULL) 
+    {
+        *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '' 
+    }
+
+    // Tokenizar la cadena usando el espacio en blanco como delimitador
+    char *token = strtok(copiaCadena, " ");
+
+    while (token != NULL) 
+    {
+        if( strcmp( token, "SELECT" ) == 0 ) printf( "CMD SELECT\n" );
+        else if( strcmp( token, "INSERT") == 0 ) printf( "CMD INSERT\n" );
+        	else if( strcmp( token, "UPDATE" ) == 0 ) printf( "CMD UPDATE\n" );
+    			else if( strcmp( token, "DELETE" ) == 0 ) printf( "CMD DELETE\n" );
+    				else if( strcmp( token, "SALIR" ) == 0 ) printf( "CMD SALIR\n" );
+       token = strtok(NULL, " ");
+    }
+}
+
+
 
 #if 0
 
