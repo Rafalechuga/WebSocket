@@ -11,9 +11,9 @@
 // the port client will be connecting to
 #define PORT 3490
 // max number of bytes we can get at once
-#define MAXDATASIZE 300
+#define MAXDATASIZE 65536
 
-#define LINE_MAX 200
+#define LINE_MAX 65536
 
 int main(int argc, char *argv[])
 {

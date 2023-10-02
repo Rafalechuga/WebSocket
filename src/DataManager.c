@@ -124,6 +124,12 @@ DataManager* DataManager_New()
 	DataManager* dm = ( DataManager* )malloc( sizeof( DataManager ) );
 
 	dm->lastStudentID = 0;
+	dm->selectF = false;
+	dm->insertF = false;
+	dm->updateF = false;
+
+	dm->sendF = false;
+	dm->deleteF = false;
 
 	if( dm->students == NULL )
 		dm ->students = DLL_New();
@@ -277,24 +283,119 @@ void DM_Tokenize_Data( DataManager* this, char chain[] )
         *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '\0' (fin de cadena)
     }
 
-    // Elimina el salto de línea (' ') si está presente en la línea
-    posicionSaltoLinea = strchr(copiaCadena, ' ');
-    if (posicionSaltoLinea != NULL) 
-    {
-        *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '' 
-    }
+    
 
     // Tokenizar la cadena usando el espacio en blanco como delimitador
     char *token = strtok(copiaCadena, " ");
+	char tmpName[ 32 ];
+	char tmpLastName[ 32 ];
+	int  tmpSemester;
+	char tmpProgram[ 32 ];
+
+	size_t i = 0;
 
     while (token != NULL) 
     {
-        if( strcmp( token, "SELECT" ) == 0 ) printf( "CMD SELECT\n" );
-        else if( strcmp( token, "INSERT") == 0 ) printf( "CMD INSERT\n" );
-        	else if( strcmp( token, "UPDATE" ) == 0 ) printf( "CMD UPDATE\n" );
-    			else if( strcmp( token, "DELETE" ) == 0 ) printf( "CMD DELETE\n" );
-    				else if( strcmp( token, "SALIR" ) == 0 ) printf( "CMD SALIR\n" );
-       token = strtok(NULL, " ");
+    	// Elimina espacios en blanco (' ') si está presente en la línea
+	    posicionSaltoLinea = strchr(token, ' ');
+	    if (posicionSaltoLinea != NULL) 
+	    {
+	        *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '' 
+	    }
+	    // Elimina apertura parentesis ('(') si está presente en la línea
+	    posicionSaltoLinea = strchr(token, '(');
+	    if (posicionSaltoLinea != NULL) 
+	    {
+	        *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '' 
+	    }
+	    // Elimina cerradura parentesis (')') si está presente en la línea
+	    posicionSaltoLinea = strchr(token, ')');
+	    if (posicionSaltoLinea != NULL) 
+	    {
+	        *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '' 
+	    }
+	    // Elimina coma parentesis (',') si está presente en la línea
+	    posicionSaltoLinea = strchr(token, ',');
+	    if (posicionSaltoLinea != NULL) 
+	    {
+	        *posicionSaltoLinea = '\0';  // Reemplaza '\n' con '' 
+	    }
+
+        if( strcmp( token, "SELECT" ) == 0 ) 
+        {
+        	this->selectF = true;
+			this->insertF = false;
+			this->updateF = false;
+			this->deleteF = false;
+        }else if( strcmp( token, "INSERT") == 0 ) 
+        {
+        	this->selectF = false;
+			this->insertF = true;
+			this->updateF = false;
+			this->deleteF = false;
+        }else if( strcmp( token, "UPDATE" ) == 0 ) 
+        {
+        	this->selectF = false;
+			this->insertF = false;
+			this->updateF = true;
+			this->deleteF = false;
+        }else if( strcmp( token, "DELETE" ) == 0 ) 
+        {
+        	this->selectF = false;
+			this->insertF = false;
+			this->updateF = false;
+			this->deleteF = true;
+        }else if( strcmp( token, "SALIR" ) == 0 )
+        {
+        	DataManager_Delete( this );
+        	abort();
+        }
+       	
+        ///////// SELECT
+       	if( this->selectF )
+       	{	
+       		memset( this->sendChain, 0, sizeof( this->sendChain ));
+       		size_t lenStudents = DLL_Len( this->students );
+			void* ptrStudents[ lenStudents ];
+
+			DLL_GetInformation( this->students, ptrStudents );
+
+			for( size_t i = 0; i < lenStudents; ++i )
+			{
+				char str[512];
+				printf("CONCAT: ");
+				ST_Print( ( Student* )ptrStudents[ i ] );
+				ST_To_String( ( Student* )ptrStudents[ i ], str, 512 );
+				strcat( this->sendChain, str );
+				strcat( this->sendChain, "\n" );
+			}
+
+			this->sendF = true;
+       	}
+
+       	///////// INSERT
+        if( this->insertF )
+        {
+        	memset( this->sendChain, 0, sizeof( this->sendChain ));
+        	if( i == 5 ) strcpy( tmpName, token );
+        	if( i == 6 ) strcpy( tmpLastName, token );
+        	if( i == 7 ) tmpSemester = atoi( token );
+        	if( i == 8 ) 
+        	{
+        		strcpy( tmpProgram, token );
+        		DM_Add_Student( this, tmpName, tmpLastName, tmpSemester, tmpProgram );
+        		this->sendF = true;
+        		printf("Nuevo Alumno Anadido\n");
+        		DM_Print_StudentsList( this );
+        	}
+
+        	strcat( this->sendChain, "Elemento Insetado" );
+        }
+
+
+
+        i++;
+       	token = strtok(NULL, " ");
     }
 }
 

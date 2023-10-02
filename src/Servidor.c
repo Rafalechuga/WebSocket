@@ -20,9 +20,9 @@
 
 #define BACKLOG 100     // Cuántas conexiones pendientes se mantienen en cola
 
-#define LINE_MAX 200
+#define LINE_MAX 65536
 
-#define MAXDATASIZE 300
+#define MAXDATASIZE 65536
 
 void sigchld_handler(int s)
 {
@@ -124,13 +124,18 @@ int main(int argc, char *argv[])
       //printf("Servidor-Received: %s", buf);
       DM_Tokenize_Data( dm, buf );
 
-      // Ahora yo capturo del teclado para responder al cliente
-      printf("Escribe un mensaje a enviar\n");
-      char linea1[LINE_MAX]; // podemos usarlo por el fgets
-      fgets(linea1,LINE_MAX,stdin);
-      printf("El mensaje a enviar es: %s", linea1);
-      if (send(new_fd, linea1, strlen(linea1), 0) == -1)
-        perror("Server-send() error lol!");
+      // responder al cliente
+      if( dm->sendF == true )
+      {
+        char linea1[LINE_MAX]; // podemos usarlo por el fgets
+        strcat( linea1 , dm->sendChain );
+        printf("El mensaje a enviar es: %s", linea1);
+        if (send(new_fd, linea1, strlen(linea1), 0) == -1)
+          perror("Server-send() error lol!");
+        dm->sendF = false;
+        
+      }
+      
       close(new_fd);
       exit(0);
     }
@@ -142,6 +147,4 @@ int main(int argc, char *argv[])
   return 0;
 
 #endif 
-
-  DataManager_Delete( dm );
 }

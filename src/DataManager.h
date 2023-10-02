@@ -14,20 +14,22 @@
 // UPDATE 	-> 
 // DELETE 	-> DM_Delete_Student
 
-typedef enum
-{
-	SELECT,
-	INSERT,
-	UPDATE,
-	DELETE,
-	SALIR
-} Instruction ;
+
 
 typedef struct DataManager
 {
 	DLL* students;
 	//DataBase* dataBase;
 	size_t lastStudentID;
+
+	char sendChain[ 4096 ];
+
+	bool selectF;
+	bool insertF;
+	bool updateF;
+	bool deleteF;
+
+	bool sendF;
 } DataManager;
 
 DataManager* DataManager_New();

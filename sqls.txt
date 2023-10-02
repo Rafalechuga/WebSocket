@@ -1,0 +1,47 @@
+SELECT * FROM Alumno
+	token[ 0 ]: SELECT
+	token[ 1 ]: *
+	token[ 2 ]: FROM
+	token[ 3 ]: Alumno
+
+
+
+
+INSERT INTO Alumno VALUES ( Jorge, levi, 9, Telecom)
+
+	token[ 0 ]: INSERT
+	token[ 1 ]: INTO
+	token[ 2 ]: Alumno
+	token[ 3 ]: VALUES
+	token[ 4 ]: 
+	token[ 5 ]: Jose
+	token[ 6 ]: Sanchez
+	token[ 7 ]: 9
+	token[ 8 ]: Telecom
+
+
+
+UPDATE Alumno SET Apellido = Gomez WHERE Id = 2
+	
+	token[ 0 ]: UPDATE
+	token[ 1 ]: Alumno
+	token[ 2 ]: SET
+	token[ 3 ]: Apellido
+	token[ 4 ]: =
+	token[ 5 ]: Gomez
+	token[ 6 ]: WHERE
+	token[ 7 ]: Id
+	token[ 8 ]: =
+	token[ 9 ]: 2
+
+DELETE FROM Alumno WHERE Id = 2
+	token[ 0 ]: DELETE
+	token[ 1 ]: FROM
+	token[ 2 ]: Alumno
+	token[ 3 ]: WHERE
+	token[ 4 ]: Id
+	token[ 5 ]: =
+	token[ 6 ]: 2
+
+
+SALIR
