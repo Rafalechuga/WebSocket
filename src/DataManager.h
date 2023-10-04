@@ -35,6 +35,7 @@ typedef struct DataManager
 DataManager* DataManager_New();
 
 void DataManager_Delete( DataManager* this );
+void DM_Purge( DataManager* this );
 void DM_Print_StudentsList( DataManager* this );
 void DM_Get_StudentesList( DataManager* this, void* ptrArr[] );
 bool DM_Add_Student( DataManager* this, char name[], char lastName[], int semester, char program[] );
@@ -44,6 +45,9 @@ void DM_Update_Student_LastName( DataManager* this, int id, char newLastName[] )
 void DM_Delete_Student( DataManager* this, int id );
 void DM_Tokenize_Data( DataManager* this, char chain[] );
 
+
+bool save_Data( DataManager* this );
+bool recover_Data( DataManager* this );
 
 
 #if 0

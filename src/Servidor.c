@@ -142,6 +142,10 @@ int main(int argc, char *argv[])
     printf("Este es el proceso padre, cierra el descriptor del socket cliente y se regresa a esperar otro cliente\n");
     close(new_fd);  // El proceso padre no necesita este descriptor
     printf("Server-new socket, new_fd closed successfully...\n");
+
+    if( dm->students == NULL )
+        dm->students = DLL_New();
+    recover_Data( dm );
   } // Fin del while
 
   return 0;

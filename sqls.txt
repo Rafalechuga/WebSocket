@@ -21,7 +21,7 @@ INSERT INTO Alumno VALUES ( Jorge, levi, 9, Telecom)
 
 
 
-UPDATE Alumno SET Apellido = Gomez WHERE Id = 2
+UPDATE Alumno SET Apellido = Nova WHERE Id = 2
 	
 	token[ 0 ]: UPDATE
 	token[ 1 ]: Alumno

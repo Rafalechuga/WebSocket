@@ -1,11 +1,6 @@
 #include "DataManager.h"
 
 
-
-/**************************************************
-				MÉTODOS PRIVADOS
-**************************************************/
-
 /**
 *	@brief Guarda la lista de alumnos.
 *	@param this Referecia a un objeto DataManager.
@@ -150,7 +145,7 @@ void DataManager_Delete( DataManager* this )
 	assert( this );
 
 	// SALVAR INFORMACIÓN!
-	//save_Data( this );
+	save_Data( this );
 
 	size_t lenStudents = DLL_Len( this->students );
 	void* ptrStudents[ lenStudents ];
@@ -159,6 +154,16 @@ void DataManager_Delete( DataManager* this )
 
 	for( size_t i = 0; i < lenStudents; ++i )
 		Student_Delete( ( Student* )ptrStudents[ i ] );
+}
+
+/**
+ * 	@brief Limpia la lista de alumnos
+ * 	@param this referencia al objeto DataManager 
+ */
+void DM_Purge( DataManager* this )
+{
+	if( this->students == NULL )
+		this ->students = DLL_New();
 }
 
 /**
@@ -287,6 +292,7 @@ void DM_Tokenize_Data( DataManager* this, char chain[] )
 
     // Tokenizar la cadena usando el espacio en blanco como delimitador
     char *token = strtok(copiaCadena, " ");
+    int tmpID;
 	char tmpName[ 32 ];
 	char tmpLastName[ 32 ];
 	int  tmpSemester;
@@ -352,7 +358,7 @@ void DM_Tokenize_Data( DataManager* this, char chain[] )
         }
        	
         ///////// SELECT
-       	if( this->selectF )
+       	if( this->selectF && i == 0)
        	{	
        		memset( this->sendChain, 0, sizeof( this->sendChain ));
        		size_t lenStudents = DLL_Len( this->students );
@@ -384,15 +390,40 @@ void DM_Tokenize_Data( DataManager* this, char chain[] )
         	{
         		strcpy( tmpProgram, token );
         		DM_Add_Student( this, tmpName, tmpLastName, tmpSemester, tmpProgram );
-        		this->sendF = true;
-        		printf("Nuevo Alumno Anadido\n");
-        		DM_Print_StudentsList( this );
+        		save_Data( this );
+        		strcat( this->sendChain, "Elemento Insertado" );
         	}
-
-        	strcat( this->sendChain, "Elemento Insetado" );
         }
 
+        ///////// UPDATE
+        if( this->updateF )
+        {
+        	memset( this->sendChain, 0, sizeof( this->sendChain ));
+        	if( i == 5 ) strcpy( tmpLastName, token );
+        	if( i == 9 ) 
+        	{
+        		tmpID = atoi( token );
+        		DM_Update_Student_LastName( this, tmpID , tmpLastName );
+        		save_Data( this );
+        		strcat( this->sendChain, "Elemento Actualizado" );
+        	}
 
+        	
+        }
+
+		///////// DELETE
+		if( this->deleteF )
+		{
+			memset( this->sendChain, 0, sizeof( this->sendChain ));
+			if( i == 6 ) 
+			{
+				tmpID = atoi( token );
+				DM_Delete_Student( this, tmpID );
+				strcat( this->sendChain, "Elemento Eliminado" );
+				save_Data( this );
+			}
+			
+		}
 
         i++;
        	token = strtok(NULL, " ");
